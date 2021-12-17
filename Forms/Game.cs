@@ -16,8 +16,11 @@ namespace MyNoTetris
         private static Brush _backGroundColor = new SolidBrush(Color.FromArgb(255, (byte)43, (byte)43, (byte)43));
         private static Brush _blocksColor = new SolidBrush(Color.FromArgb(255, (byte)123, (byte)123, (byte)43));
         /* Definicoes da tela do jogo*/
+        private Bitmap _nextBlockBitmap;
+        private Graphics _nextBlockGraphics;
         private Graphics _gameAreGraphics;
         private Bitmap _gameAreaBitmap;
+
         private int _gameAreaWitdh = 14;
         private int _gameAreaHeight = 26;
         private int[,] _gameAreaPointsToARRAY;
@@ -27,10 +30,13 @@ namespace MyNoTetris
         private int _blockCurrentY;
         /* Strtura do bloco*/
         private ShapeBlocks _currentBlock;
+        private ShapeBlocks _netxBlock;
         /* Trhead  */
         private Bitmap _threadBitmap;
         private Graphics _threadGraphics;
         private Timer _gameTimer = new Timer();
+        private int Score = 0;
+
 
         private void GameStart()
         {
@@ -48,10 +54,36 @@ namespace MyNoTetris
             _gameAreaPointsToARRAY = new int[_gameAreaWitdh, _gameAreaHeight];
 
             _currentBlock = GetRandomBlocks();
-       
+            _netxBlock = getNexBlock();
+
             _gameTimer.Tick += timer_tick;
             _gameTimer.Interval = 200;
             _gameTimer.Start();
+        }
+        private ShapeBlocks getNexBlock()
+        {
+            var ShapeBlocks = GetRandomBlocks();
+            _nextBlockBitmap = new Bitmap(6 * _pointsSize, 6 * _pointsSize);
+            _nextBlockGraphics = Graphics.FromImage(_nextBlockBitmap);
+
+            _nextBlockGraphics.FillRectangle(_backGroundColor,0,0, _nextBlockBitmap.Width, _nextBlockBitmap.Height);
+
+            var startX = (6 - ShapeBlocks._width) / 2;
+            var startY = (6 - ShapeBlocks._height) / 2;
+
+            for (int y = 0; y < ShapeBlocks._height; y++)
+            {
+                for (int x = 0; x < ShapeBlocks._width; x++)
+                {
+                    _nextBlockGraphics.FillRectangle(
+                        ShapeBlocks._points[y, x] == 1 ? _blocksColor : _backGroundColor,
+                        (startX + x) * _pointsSize, (startY + y) * _pointsSize, _pointsSize, _pointsSize
+                        );
+                }
+            }
+            PB_PREVIEW.Size = _nextBlockBitmap.Size;
+            PB_PREVIEW.Image = _nextBlockBitmap;
+            return ShapeBlocks;
         }
         private void ClearGame()
         {
@@ -154,12 +186,82 @@ namespace MyNoTetris
                 _gameAreaBitmap = new Bitmap(_threadBitmap);
                 updateGameArea();
                 _currentBlock = GetRandomBlocks();
+                _netxBlock = getNexBlock();
+                clearFillRow();
             }
+        }
+
+        private void clearFillRow()
+        {
+            for (int x = 0; x < _gameAreaHeight; x++)
+            {
+                int y;
+                for (y = _gameAreaWitdh -1; y >= 0; y--)
+                {
+                    if (_gameAreaPointsToARRAY[y, x] == 0)
+                        break;
+                }
+                if (y == -1)
+                {
+                    Score++;
+                    _gameTimer.Interval -= 10;
+                    for (y = 0; y < _gameAreaWitdh; y++)
+                    {
+                        for(int k = x; k > 0; k--)
+                        {
+                            _gameAreaPointsToARRAY[y, k] = _gameAreaPointsToARRAY[y, k - 1];
+                        }
+                        _gameAreaPointsToARRAY[y, 0] = 0;
+
+                    }
+                }
+            }
+            for (int y = 0; y < _gameAreaWitdh; y++)
+            {
+                for (int x = 0; x < _gameAreaHeight; x++)
+                {
+                    _gameAreGraphics = Graphics.FromImage(_gameAreaBitmap);
+                   _gameAreGraphics.FillRectangle(
+                       _gameAreaPointsToARRAY[y,x] == 1 ? _blocksColor : _backGroundColor,
+                       y * _pointsSize, x * _pointsSize, _pointsSize, _pointsSize );
+                }
+            }
+            PB_MAIN_GAME.Image = _gameAreaBitmap;
         }
 
         private void BT_START_Click(object sender, EventArgs e)
         {
             GameStart();
         }
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            var verticalMovemnt = 0;
+            var horizontalMovemnt = 0;
+            //capture up arrow key
+            switch (keyData)
+            {
+                case Keys.Left:
+                    verticalMovemnt--;
+                    break;
+                case Keys.Right:
+                    verticalMovemnt++;
+                    break;
+                case Keys.Down:
+                    horizontalMovemnt++;
+                    break;
+                case Keys.Up:
+                    _currentBlock.turn();
+                    break;
+                default:
+                    break;
+            }
+            var MoveSuccess = VerifyIfBlockCanMove(horizontalMovemnt, verticalMovemnt);
+            if (!MoveSuccess
+                && keyData == Keys.Up)
+                _currentBlock.rollBoack();
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+       
+
     }
 }

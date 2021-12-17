@@ -32,7 +32,10 @@
             this.BT_START = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.PB_PREVIEW = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.PB_MAIN_GAME)).BeginInit();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PB_PREVIEW)).BeginInit();
             this.SuspendLayout();
             // 
             // PB_MAIN_GAME
@@ -56,9 +59,10 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panel1.Controls.Add(this.PB_PREVIEW);
             this.panel1.Location = new System.Drawing.Point(465, 44);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(144, 267);
+            this.panel1.Size = new System.Drawing.Size(179, 267);
             this.panel1.TabIndex = 2;
             // 
             // panel2
@@ -68,6 +72,14 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(122, 121);
             this.panel2.TabIndex = 3;
+            // 
+            // PB_PREVIEW
+            // 
+            this.PB_PREVIEW.Location = new System.Drawing.Point(17, 30);
+            this.PB_PREVIEW.Name = "PB_PREVIEW";
+            this.PB_PREVIEW.Size = new System.Drawing.Size(121, 114);
+            this.PB_PREVIEW.TabIndex = 4;
+            this.PB_PREVIEW.TabStop = false;
             // 
             // Game
             // 
@@ -83,6 +95,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tetris";
             ((System.ComponentModel.ISupportInitialize)(this.PB_MAIN_GAME)).EndInit();
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PB_PREVIEW)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -93,6 +107,7 @@
         private System.Windows.Forms.Button BT_START;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.PictureBox PB_PREVIEW;
     }
 }
 

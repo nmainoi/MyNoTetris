@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyNoTetris.Classes
 {
-    static class BlocksHandler
+    internal static class BlocksHandler
     {
         private static ShapeBlocks[] BlocksArray;
 
@@ -26,15 +22,64 @@ namespace MyNoTetris.Classes
                         {1 },
                         {1 }
                     }
-                }
+                },
+                 new ShapeBlocks
+                {
+                    _width = 3,
+                    _height = 2,
+                    _blockName = "L",
+                    _points = new int[,]
+                    {
+                        {1,0,0 },
+                        {1,1,1} }
+                },
+                  new ShapeBlocks {
+                    _width = 3,
+                    _height = 2,
+                    _blockName = "L - Reverso",
+                    _points = new int[,]
+                        {
+                            { 0, 0, 1 },
+                            { 1, 1, 1 }
+                        }
+                    },
+                    new ShapeBlocks {
+                        _width = 3,
+                        _height = 2,
+                        _blockName = "-_",
+                        _points = new int[,]
+                        {
+                            { 1, 1, 0 },
+                            { 0, 1, 1 }
+                        }
+                    },
+                    new ShapeBlocks {
+                        _width = 3,
+                        _height = 2,
+                        _blockName = "_-",
+                        _points = new int[,]
+                        {
+                            { 0, 1, 1 },
+                            { 1, 1, 0 }
+                        }
+                    },
+                    new ShapeBlocks {
+                        _width = 3,
+                        _height = 2,
+                        _blockName = "_|_",
+                        _points = new int[,]
+                        {
+                            { 0, 1, 0 },
+                            { 1, 1, 1 }
+                        }
+                    }
             };
         }
-
 
         public static ShapeBlocks GetRandomBlock()
         {
             var block = BlocksArray[new Random().Next(BlocksArray.Length)];
-                return block;
+            return block;
         }
     }
 }
