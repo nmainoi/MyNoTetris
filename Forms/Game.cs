@@ -13,8 +13,8 @@ namespace MyNoTetris
         }
 
         /* Aqui define o plando de fundo do jogo, e tela de preview */
-        private static Brush _backGroundColor = new SolidBrush(Color.FromArgb(255, (byte)43, (byte)43, (byte)43));
-        private static Brush _blocksColor = new SolidBrush(Color.FromArgb(255, (byte)123, (byte)123, (byte)43));
+        private static Brush _backGroundColor = new SolidBrush(Color.FromArgb(255, (byte)33, (byte)33, (byte)33));
+        private static Brush _blocksColor = new SolidBrush(Color.FromArgb(255, (byte)255, (byte)255, (byte)255));
         /* Definicoes da tela do jogo*/
         private Bitmap _nextBlockBitmap;
         private Graphics _nextBlockGraphics;
@@ -87,7 +87,9 @@ namespace MyNoTetris
         }
         private void ClearGame()
         {
-
+            Score = 0;
+            TXT_SCORE.Text = Score.ToString();
+            TXT_LEVEL.Text = (Score / 10 + 1).ToString();
         _blockCurrentX = 0;
         _blockCurrentY = 0;
 
@@ -204,6 +206,8 @@ namespace MyNoTetris
                 if (y == -1)
                 {
                     Score++;
+                    TXT_SCORE.Text = Score.ToString();
+                    TXT_LEVEL.Text = (Score / 10 + 1).ToString();
                     _gameTimer.Interval -= 10;
                     for (y = 0; y < _gameAreaWitdh; y++)
                     {
@@ -261,7 +265,19 @@ namespace MyNoTetris
                 _currentBlock.rollBoack();
             return base.ProcessCmdKey(ref msg, keyData);
         }
-       
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if(_gameTimer.Enabled == false)
+            {
+                _gameTimer.Enabled = true;
+                _gameTimer.Start();
+            }
+            else
+            {
+                _gameTimer.Enabled = false;
+                _gameTimer.Stop();
+            }
+        }
     }
 }
