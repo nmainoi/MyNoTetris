@@ -162,6 +162,7 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(656, 55);
             this.panel3.TabIndex = 6;
+            this.panel3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.panel3_MouseDown);
             // 
             // label3
             // 
@@ -173,6 +174,7 @@
             this.label3.Size = new System.Drawing.Size(271, 37);
             this.label3.TabIndex = 7;
             this.label3.Text = "Tetris Black n\' white";
+            this.label3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.label3_MouseDown);
             // 
             // pictureBox1
             // 
@@ -195,6 +197,7 @@
             this.BT_MINIZE.TabIndex = 8;
             this.BT_MINIZE.Text = "_";
             this.BT_MINIZE.UseVisualStyleBackColor = true;
+            this.BT_MINIZE.Click += new System.EventHandler(this.BT_MINIZE_Click);
             // 
             // BT_CLOSE
             // 
@@ -207,6 +210,7 @@
             this.BT_CLOSE.TabIndex = 7;
             this.BT_CLOSE.Text = "X";
             this.BT_CLOSE.UseVisualStyleBackColor = true;
+            this.BT_CLOSE.Click += new System.EventHandler(this.BT_CLOSE_Click);
             // 
             // LBL_SCORE
             // 

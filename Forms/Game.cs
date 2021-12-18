@@ -7,12 +7,29 @@ namespace MyNoTetris
 {
     public partial class Game : Form
     {
+        private Timer _PostLogin = new Timer();
         public Game()
         {
             InitializeComponent();
-              SQL.ConsistSQLDatabase();
+            _PostLogin.Tick += timerPostLogin_tick;
+            _PostLogin.Interval = 1;
+            _PostLogin.Start();
+            Enabled = false;
+
         }
 
+        #region DragScreenOnMoveVars
+       
+        private const int WM_NCLBUTTONDOWN = 0xA1;
+        private const int HT_CAPTION = 0x2;
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
+
+        #endregion DragScreenOnMoveVars
         /* Aqui define o plando de fundo do jogo, e tela de preview */
         private static Brush _backGroundColor = new SolidBrush(Color.FromArgb(255, (byte)33, (byte)33, (byte)33));
         private static Brush _blocksColor = new SolidBrush(Color.FromArgb(255, (byte)255, (byte)255, (byte)255));
@@ -37,7 +54,7 @@ namespace MyNoTetris
         private Graphics _threadGraphics;
         private Timer _gameTimer = new Timer();
         private int Score = 0;
-
+        public static string _user { get; set; }= "PlayerO1"; 
 
         private void GameStart()
         {
@@ -53,10 +70,9 @@ namespace MyNoTetris
             PB_MAIN_GAME.Image = _gameAreaBitmap;
 
             _gameAreaPointsToARRAY = new int[_gameAreaWitdh, _gameAreaHeight];
-
+            _netxBlock = getNexBlock();
             _currentBlock = GetRandomBlocks();
             _netxBlock = getNexBlock();
-
             _gameTimer.Tick += timer_tick;
             _gameTimer.Interval = 200;
             _gameTimer.Start();
@@ -180,7 +196,21 @@ namespace MyNoTetris
             }
             return false;
         }
+        private void UpdateScore()
+        {
 
+        }
+        private void timerPostLogin_tick(object sender, EventArgs e)
+        {
+            _PostLogin.Stop();
+            MyNoTetris.Forms.Login Login = new MyNoTetris.Forms.Login();
+            Login.CarregaUser(_user);
+            Login.ShowDialog();
+            SQL.ConsistSQLDatabase();
+            Enabled = true;
+            GameStart();
+
+        }
         private void timer_tick(object sender, EventArgs e)
         {
             var moved = VerifyIfBlockCanMove(moveDown: 1);
@@ -188,6 +218,7 @@ namespace MyNoTetris
             {
                 _gameAreaBitmap = new Bitmap(_threadBitmap);
                 updateGameArea();
+                _netxBlock = getNexBlock();
                 _currentBlock = GetRandomBlocks();
                 _netxBlock = getNexBlock();
                 clearFillRow();
@@ -286,7 +317,35 @@ namespace MyNoTetris
         private void BT_RANKING_Click(object sender, EventArgs e)
         {
             Form ScoreBoard  = new MyNoTetris.Forms.ScoreBoard();
-            ScoreBoard.Show();
+            ScoreBoard.ShowDialog();
+        }
+
+        private void panel3_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+
+        private void label3_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+
+        private void BT_CLOSE_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void BT_MINIZE_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
         }
     }
 }
