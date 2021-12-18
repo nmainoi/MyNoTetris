@@ -10,6 +10,7 @@ namespace MyNoTetris
         public Game()
         {
             InitializeComponent();
+              SQL.ConsistSQLDatabase();
         }
 
         /* Aqui define o plando de fundo do jogo, e tela de preview */
@@ -88,8 +89,8 @@ namespace MyNoTetris
         private void ClearGame()
         {
             Score = 0;
-            TXT_SCORE.Text = Score.ToString();
-            TXT_LEVEL.Text = (Score / 10 + 1).ToString();
+            LBL_SCORE.Text = Score.ToString();
+            LBL_LEVEL.Text = (Score / 10 + 1).ToString();
         _blockCurrentX = 0;
         _blockCurrentY = 0;
 
@@ -206,8 +207,8 @@ namespace MyNoTetris
                 if (y == -1)
                 {
                     Score++;
-                    TXT_SCORE.Text = Score.ToString();
-                    TXT_LEVEL.Text = (Score / 10 + 1).ToString();
+                    LBL_SCORE.Text = Score.ToString();
+                    LBL_LEVEL.Text = (Score / 10 + 1).ToString();
                     _gameTimer.Interval -= 10;
                     for (y = 0; y < _gameAreaWitdh; y++)
                     {
@@ -270,14 +271,22 @@ namespace MyNoTetris
         {
             if(_gameTimer.Enabled == false)
             {
+                BT_PAUSE.Text = "Pausar";
                 _gameTimer.Enabled = true;
                 _gameTimer.Start();
             }
             else
             {
+                BT_PAUSE.Text = "Continuar";
                 _gameTimer.Enabled = false;
                 _gameTimer.Stop();
             }
+        }
+
+        private void BT_RANKING_Click(object sender, EventArgs e)
+        {
+            Form ScoreBoard  = new MyNoTetris.Forms.ScoreBoard();
+            ScoreBoard.Show();
         }
     }
 }
