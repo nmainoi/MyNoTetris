@@ -203,6 +203,7 @@ namespace MyNoTetris
                 /* precisa colocar na hash caso seja novo usuario - TODO*/
                 SQL.MakeUserHash();
                 OpenRank(true);
+                ClearGame();
                 return true;
             }
             return false;
