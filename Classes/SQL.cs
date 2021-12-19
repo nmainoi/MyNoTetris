@@ -1,24 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MyNoTetris.Classes
 {
     internal class SQL
     {
-        public static string connetionString = "Data Source=.;Initial Catalog=Master;User ID=" +  MyNoTetris.Properties.Resources.User + ";Password=" + MyNoTetris.Properties.Resources.PassWord + ";";
+        public static string connetionString = "Data Source=.;Initial Catalog=Master;User ID=" + MyNoTetris.Properties.Resources.User + ";Password=" + MyNoTetris.Properties.Resources.PassWord + ";";
         public static Dictionary<int, string> userHash = new Dictionary<int, string>();
         public static string _user { get; set; } = "PlayerO1";
         public static int _id { get; set; }
         private static globalCommands Gm = new globalCommands();
+
         public static int InsertSQL(string SqlCommandLine = "")
         {
-
             int newProdID = 0;
             using (SqlConnection conn = new SqlConnection(connetionString))
             {
@@ -39,7 +35,6 @@ namespace MyNoTetris.Classes
 
         public static string ReadSQL(string SqlCommandLine = "")
         {
-
             string newProdID = "";
             using (SqlConnection conn = new SqlConnection(connetionString))
             {
@@ -48,19 +43,17 @@ namespace MyNoTetris.Classes
                 {
                     conn.Open();
                     newProdID = Convert.ToString(cmd.ExecuteScalar());
-
                 }
                 catch (Exception ex)
                 {
-              //      MessageBox.Show("Erro na conexão SQL envie mensagem para o desenvolvedor! " + System.Environment.NewLine + ex.ToString());
-
+                    //      MessageBox.Show("Erro na conexão SQL envie mensagem para o desenvolvedor! " + System.Environment.NewLine + ex.ToString());
                 }
             }
             return newProdID;
         }
+
         public static bool RunSQLCommand(string SqlCommandLine = "")
         {
-
             SqlConnection connection;
             SqlCommand command;
             SqlDataReader dataReader;
@@ -85,6 +78,7 @@ namespace MyNoTetris.Classes
             }
             return true;
         }
+
         public static void ConsistSQLDatabase()
         {
             string mysql = " IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = 'BDTetris') BEGIN CREATE DATABASE[BDTetris] END";
@@ -98,9 +92,8 @@ namespace MyNoTetris.Classes
             RunSQLCommand(mysql);
             /*monta hash de usuarios para nao ter que ficar executando qury do sql toda hora*/
             MakeUserHash();
-
         }
-       
+
         public static void MakeUserHash()
         {
             string sql = "Select ID,NAME FROM BDTetris.dbo.[USER](nolock)";
@@ -113,6 +106,7 @@ namespace MyNoTetris.Classes
                     userHash.Add(Int32.Parse(AuxID), AuxNAME);
             }
         }
+
         private static string CreateTableUserTetris(string mysql)
         {
             mysql = "IF NOT (EXISTS (SELECT * FROM BDTetris.INFORMATION_SCHEMA.TABLES WHERE  TABLE_NAME = 'USER')) ";
@@ -124,6 +118,7 @@ namespace MyNoTetris.Classes
             mysql += " END";
             return mysql;
         }
+
         private static string CreateTableScoreTetris(string mysql)
         {
             mysql = "IF NOT (EXISTS (SELECT * FROM BDTetris.INFORMATION_SCHEMA.TABLES WHERE  TABLE_NAME = 'SCORE')) ";
@@ -136,22 +131,21 @@ namespace MyNoTetris.Classes
             mysql += " END";
             return mysql;
         }
+
         public static List<Dictionary<string, string>> CreateDataTable(string commandLine)
         {
-            
             HashSet<string> columns = new HashSet<string>();
-            List<Dictionary<string,string>> rows = new List<Dictionary<string,string>>();
-            string line =(string)Gm.Split(commandLine.ToLower(), "select").GetValue(1);
-           line = (string)Gm.Split(line.ToLower(), "from").GetValue(0);
+            List<Dictionary<string, string>> rows = new List<Dictionary<string, string>>();
+            string line = (string)Gm.Split(commandLine.ToLower(), "select").GetValue(1);
+            line = (string)Gm.Split(line.ToLower(), "from").GetValue(0);
             string[] reg = Gm.Split(line, ",");
             foreach (var item in reg)
                 columns.Add(item);
 
-                
             SqlConnection connection;
             SqlCommand command;
             SqlDataReader dataReader;
-            Dictionary<string,string> sqlRows = new Dictionary<string,string>();
+            Dictionary<string, string> sqlRows = new Dictionary<string, string>();
             var values = new List<string>();
             connection = new SqlConnection(connetionString);
             try
@@ -167,7 +161,7 @@ namespace MyNoTetris.Classes
                     {
                         result.Add(item.ToUpper().Trim(), dataReader[i].ToString());
                         i++;
-                    }                   
+                    }
                     rows.Add(result);
                 }
                 dataReader.Close();
@@ -181,5 +175,5 @@ namespace MyNoTetris.Classes
 
             return rows;
         }
-  }
+    }
 }

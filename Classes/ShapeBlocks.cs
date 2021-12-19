@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyNoTetris.Classes
+﻿namespace MyNoTetris.Classes
 {
     internal class ShapeBlocks
     {
@@ -12,8 +6,7 @@ namespace MyNoTetris.Classes
         public int _height;
         public int[,] _points;
         public string _blockName;
-        public int [,] _backupPoints;
-
+        public int[,] _backupPoints;
 
         public void turn()
         {
@@ -33,6 +26,7 @@ namespace MyNoTetris.Classes
             _width = _height;
             _height = tempWitdh;
         }
+
         public void rollBoack()
         {
             /* Retorna antiga posicao*/

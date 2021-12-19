@@ -1,20 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyNoTetris.Classes
 {
     public class globalCommands
     {
-                public string[] Split(string value, string separator)
+        /* Auxiliares que eu uso de uma blibioteca pessoal */
+        public string[] Split(string value, string separator)
         {
             string[] stringSeparators = { separator };
 
             string[] resultado = value.Split(stringSeparators, System.StringSplitOptions.None);
             return resultado;
         }
+
         public string EdData(string wlDate)
         {
             if (string.IsNullOrWhiteSpace(wlDate))
@@ -31,12 +29,10 @@ namespace MyNoTetris.Classes
                 return "";
             }
         }
+
         public string Format(DateTime data, string formato)
         {
             return data.ToString(formato);
         }
-
-
-
     }
 }

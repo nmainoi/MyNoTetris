@@ -267,6 +267,7 @@
             this.Name = "Game";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tetris";
+            this.Leave += new System.EventHandler(this.Game_Leave);
             ((System.ComponentModel.ISupportInitialize)(this.PB_MAIN_GAME)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_PREVIEW)).EndInit();
             this.panel2.ResumeLayout(false);
