@@ -33,7 +33,7 @@ namespace MyNoTetris.Forms
             dt.Columns.Add(new DataColumn(nameof(COL_SCORE)));
             dt.Columns.Add(new DataColumn(nameof(COL_DATA), typeof(DateTime)));
                 dt.Columns.Add(new DataColumn(nameof(COL_HR)));
-            string sql = "Select ID,SCORE,DATE,TIME FROM BDTetris.dbo.SCORE (nolock)";
+            string sql = "Select ID,SCORE,DATE,TIME FROM BDTetris.dbo.SCORE (nolock) order by SCORE desc";
            // var ds = new DataSet();
             List< Dictionary<string,string>> reg = Classes.SQL.CreateDataTable(sql);
             foreach(Dictionary<string,string> row in reg)

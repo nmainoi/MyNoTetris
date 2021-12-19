@@ -61,7 +61,8 @@ namespace MyNoTetris
 
         private void GameStart()
         {
-          //  StartSong();
+            //  StartSong();
+
             ClearGame();
             PB_MAIN_GAME.Width = _gameAreaWitdh * _pointsSize;
             PB_MAIN_GAME.Height = _gameAreaHeight * _pointsSize;
@@ -79,8 +80,8 @@ namespace MyNoTetris
             _netxBlock = getNexBlock();
             /* set timer */
             _gameTimer.Tick += timer_tick;
-            _gameTimer.Interval = 200;           
-            _gameTimer.Start();
+            _gameTimer.Interval = 200;
+            GameChangeSatus();
         }
         private ShapeBlocks getNexBlock()
         {
@@ -116,7 +117,7 @@ namespace MyNoTetris
         _blockCurrentY = 0;
 
           _currentBlock =  new ShapeBlocks();
-
+            _gameRuning = false;
             _gameTimer.Stop();
             _gameTimer.Dispose();
              _gameTimer = new Timer();
@@ -197,6 +198,8 @@ namespace MyNoTetris
                 _gameTimer.Stop();
                 MessageBox.Show("Fim de jogo!");
                 UpdateScore();
+                /* precisa colocar na hash caso seja novo usuario - TODO*/
+                SQL.MakeUserHash();
                 MyNoTetris.Forms.ScoreBoard ScoreBoard = new MyNoTetris.Forms.ScoreBoard();
                 ScoreBoard.CreateDataCrid(true);
                 ScoreBoard.ShowDialog();

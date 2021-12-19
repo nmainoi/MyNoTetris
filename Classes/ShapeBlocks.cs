@@ -35,8 +35,8 @@ namespace MyNoTetris.Classes
         }
         public void rollBoack()
         {
-            _points = _backupPoints;
             /* Retorna antiga posicao*/
+            _points = _backupPoints;
             var tempWitdh = _width;
             _width = _height;
             _height = tempWitdh;

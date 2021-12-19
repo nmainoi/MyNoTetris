@@ -101,7 +101,7 @@ namespace MyNoTetris.Classes
 
         }
        
-        private static void MakeUserHash()
+        public static void MakeUserHash()
         {
             string sql = "Select ID,NAME FROM BDTetris.dbo.[USER](nolock)";
             List<Dictionary<string, string>> listUser = SQL.CreateDataTable(sql);
