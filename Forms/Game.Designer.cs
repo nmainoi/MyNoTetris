@@ -32,6 +32,8 @@
             this.BT_START = new System.Windows.Forms.Button();
             this.PB_PREVIEW = new System.Windows.Forms.PictureBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.LBL_LEVEL = new System.Windows.Forms.Label();
+            this.LBL_SCORE = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.BT_PAUSE = new System.Windows.Forms.Button();
@@ -41,8 +43,6 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.BT_MINIZE = new System.Windows.Forms.Button();
             this.BT_CLOSE = new System.Windows.Forms.Button();
-            this.LBL_SCORE = new System.Windows.Forms.Label();
-            this.LBL_LEVEL = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.PB_MAIN_GAME)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PB_PREVIEW)).BeginInit();
@@ -95,6 +95,30 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(122, 223);
             this.panel2.TabIndex = 3;
+            // 
+            // LBL_LEVEL
+            // 
+            this.LBL_LEVEL.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LBL_LEVEL.ForeColor = System.Drawing.Color.Gainsboro;
+            this.LBL_LEVEL.Image = global::MyNoTetris.Properties.Resources.SCOREBG;
+            this.LBL_LEVEL.Location = new System.Drawing.Point(18, 140);
+            this.LBL_LEVEL.Name = "LBL_LEVEL";
+            this.LBL_LEVEL.Size = new System.Drawing.Size(88, 68);
+            this.LBL_LEVEL.TabIndex = 8;
+            this.LBL_LEVEL.Text = "1";
+            this.LBL_LEVEL.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // LBL_SCORE
+            // 
+            this.LBL_SCORE.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LBL_SCORE.ForeColor = System.Drawing.Color.Gainsboro;
+            this.LBL_SCORE.Image = global::MyNoTetris.Properties.Resources.SCOREBG;
+            this.LBL_SCORE.Location = new System.Drawing.Point(18, 44);
+            this.LBL_SCORE.Name = "LBL_SCORE";
+            this.LBL_SCORE.Size = new System.Drawing.Size(88, 68);
+            this.LBL_SCORE.TabIndex = 7;
+            this.LBL_SCORE.Text = "1";
+            this.LBL_SCORE.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label2
             // 
@@ -211,30 +235,6 @@
             this.BT_CLOSE.Text = "X";
             this.BT_CLOSE.UseVisualStyleBackColor = true;
             this.BT_CLOSE.Click += new System.EventHandler(this.BT_CLOSE_Click);
-            // 
-            // LBL_SCORE
-            // 
-            this.LBL_SCORE.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LBL_SCORE.ForeColor = System.Drawing.Color.Gainsboro;
-            this.LBL_SCORE.Image = global::MyNoTetris.Properties.Resources.SCOREBG;
-            this.LBL_SCORE.Location = new System.Drawing.Point(18, 44);
-            this.LBL_SCORE.Name = "LBL_SCORE";
-            this.LBL_SCORE.Size = new System.Drawing.Size(88, 68);
-            this.LBL_SCORE.TabIndex = 7;
-            this.LBL_SCORE.Text = "1";
-            this.LBL_SCORE.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // LBL_LEVEL
-            // 
-            this.LBL_LEVEL.Font = new System.Drawing.Font("Segoe UI", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LBL_LEVEL.ForeColor = System.Drawing.Color.Gainsboro;
-            this.LBL_LEVEL.Image = global::MyNoTetris.Properties.Resources.SCOREBG;
-            this.LBL_LEVEL.Location = new System.Drawing.Point(18, 140);
-            this.LBL_LEVEL.Name = "LBL_LEVEL";
-            this.LBL_LEVEL.Size = new System.Drawing.Size(88, 68);
-            this.LBL_LEVEL.TabIndex = 8;
-            this.LBL_LEVEL.Text = "1";
-            this.LBL_LEVEL.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label4
             // 

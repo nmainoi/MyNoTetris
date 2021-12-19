@@ -13,17 +13,19 @@ namespace MyNoTetris.Forms
 {
     public partial class ScoreBoard : Form
     {
-        private const string V = "error";
+   
+     
         private static globalCommands Gc = new globalCommands();    
         public ScoreBoard()
         {
             InitializeComponent();
-     
-            CreateDataCrid();
+          
+
         }
 
-        private void CreateDataCrid()
+        public void CreateDataCrid(bool gameOver = false)
         {
+            LBL_TITLE.Visible = gameOver;
             DataRow line_ds;
             DataTable dt = new DataTable { Locale = System.Globalization.CultureInfo.GetCultureInfo("pt-BR") };
 
@@ -69,9 +71,9 @@ namespace MyNoTetris.Forms
 
         }
 
-        private void BT_START_Click(object sender, EventArgs e)
+        private void BT_EXIT_Click(object sender, EventArgs e)
         {
-           
+            this.Close();
         }
     }
 }

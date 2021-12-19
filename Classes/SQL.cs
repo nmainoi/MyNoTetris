@@ -13,7 +13,8 @@ namespace MyNoTetris.Classes
     {
         public static string connetionString = "Data Source=.;Initial Catalog=Master;User ID=" +  MyNoTetris.Properties.Resources.User + ";Password=" + MyNoTetris.Properties.Resources.PassWord + ";";
         public static Dictionary<int, string> userHash = new Dictionary<int, string>();
-
+        public static string _user { get; set; } = "PlayerO1";
+        public static int _id { get; set; }
         private static globalCommands Gm = new globalCommands();
         public static int InsertSQL(string SqlCommandLine = "")
         {
@@ -51,7 +52,7 @@ namespace MyNoTetris.Classes
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Erro na conexão SQL envie mensagem para o desenvolvedor! " + System.Environment.NewLine + ex.ToString());
+              //      MessageBox.Show("Erro na conexão SQL envie mensagem para o desenvolvedor! " + System.Environment.NewLine + ex.ToString());
 
                 }
             }

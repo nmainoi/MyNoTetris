@@ -31,6 +31,11 @@ namespace MyNoTetris.Classes
                 return "";
             }
         }
+        public string Format(DateTime data, string formato)
+        {
+            return data.ToString(formato);
+        }
+
 
 
     }

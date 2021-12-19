@@ -1,6 +1,7 @@
 ﻿using MyNoTetris.Classes;
 using System;
 using System.Drawing;
+using System.Media;
 using System.Windows.Forms;
 
 namespace MyNoTetris
@@ -14,12 +15,13 @@ namespace MyNoTetris
             _PostLogin.Tick += timerPostLogin_tick;
             _PostLogin.Interval = 1;
             _PostLogin.Start();
-            Enabled = false;
+
 
         }
+        private static globalCommands Gc = new globalCommands();
 
         #region DragScreenOnMoveVars
-       
+
         private const int WM_NCLBUTTONDOWN = 0xA1;
         private const int HT_CAPTION = 0x2;
 
@@ -54,10 +56,12 @@ namespace MyNoTetris
         private Graphics _threadGraphics;
         private Timer _gameTimer = new Timer();
         private int Score = 0;
-        public static string _user { get; set; }= "PlayerO1"; 
+        private bool _gameRuning = false;
+
 
         private void GameStart()
         {
+          //  StartSong();
             ClearGame();
             PB_MAIN_GAME.Width = _gameAreaWitdh * _pointsSize;
             PB_MAIN_GAME.Height = _gameAreaHeight * _pointsSize;
@@ -70,11 +74,12 @@ namespace MyNoTetris
             PB_MAIN_GAME.Image = _gameAreaBitmap;
 
             _gameAreaPointsToARRAY = new int[_gameAreaWitdh, _gameAreaHeight];
-            _netxBlock = getNexBlock();
+
             _currentBlock = GetRandomBlocks();
             _netxBlock = getNexBlock();
+            /* set timer */
             _gameTimer.Tick += timer_tick;
-            _gameTimer.Interval = 200;
+            _gameTimer.Interval = 200;           
             _gameTimer.Start();
         }
         private ShapeBlocks getNexBlock()
@@ -190,8 +195,11 @@ namespace MyNoTetris
             if (_blockCurrentY < 0)
             {
                 _gameTimer.Stop();
-                MessageBox.Show("Fim de jogo!");  
-                
+                MessageBox.Show("Fim de jogo!");
+                UpdateScore();
+                MyNoTetris.Forms.ScoreBoard ScoreBoard = new MyNoTetris.Forms.ScoreBoard();
+                ScoreBoard.CreateDataCrid(true);
+                ScoreBoard.ShowDialog();
                 return true;
             }
             return false;
@@ -199,14 +207,28 @@ namespace MyNoTetris
         private void UpdateScore()
         {
 
+            string mysql = "Select ID FROM [BDTetris].[dbo].[USER](nolock) WHERE NAME= '" + SQL._user + "'";
+            string UserHasName = Classes.SQL.ReadSQL(mysql);
+
+            if (!string.IsNullOrEmpty(UserHasName))/* so insere novo usuario se nao le direto */
+            {
+                mysql = "INSERT INTO [BDTetris].[dbo].[SCORE] (ID,SCORE,DATE,TIME) VALUES ( ";
+                mysql += SQL._id ;
+                mysql += ","+ Score + "";
+                mysql += ",'" + Gc.Format(DateTime.Now, "yyyyMMdd") + "'";
+                mysql += ",'" + Gc.Format(DateTime.Now, "HH:mm") + "'";
+                mysql += ")";
+
+            }
+            Classes.SQL.InsertSQL(mysql);
         }
         private void timerPostLogin_tick(object sender, EventArgs e)
         {
             _PostLogin.Stop();
-            MyNoTetris.Forms.Login Login = new MyNoTetris.Forms.Login();
-            Login.CarregaUser(_user);
-            Login.ShowDialog();
             SQL.ConsistSQLDatabase();
+            MyNoTetris.Forms.Login Login = new MyNoTetris.Forms.Login();
+            Login.ShowDialog();
+            
             Enabled = true;
             GameStart();
 
@@ -300,23 +322,30 @@ namespace MyNoTetris
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(_gameTimer.Enabled == false)
+            GameChangeSatus();
+        }
+
+        private void GameChangeSatus()
+        {
+            if (_gameRuning == false)
             {
+                
                 BT_PAUSE.Text = "Pausar";
-                _gameTimer.Enabled = true;
+                _gameRuning = true;
                 _gameTimer.Start();
             }
-            else
+            else if(_gameRuning)
             {
                 BT_PAUSE.Text = "Continuar";
-                _gameTimer.Enabled = false;
+                _gameRuning = false;
                 _gameTimer.Stop();
             }
         }
 
         private void BT_RANKING_Click(object sender, EventArgs e)
         {
-            Form ScoreBoard  = new MyNoTetris.Forms.ScoreBoard();
+             MyNoTetris.Forms.ScoreBoard ScoreBoard  = new MyNoTetris.Forms.ScoreBoard();
+            ScoreBoard.CreateDataCrid();
             ScoreBoard.ShowDialog();
         }
 

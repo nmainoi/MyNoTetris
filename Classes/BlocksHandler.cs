@@ -72,6 +72,16 @@ namespace MyNoTetris.Classes
                             { 0, 1, 0 },
                             { 1, 1, 1 }
                         }
+                    },
+                    new ShapeBlocks {
+                        _width = 2,
+                        _height = 2,
+                        _blockName = "Quadrado",
+                        _points = new int[,]
+                        {
+                            { 1, 1 },
+                            { 1, 1 }
+                        }
                     }
             };
         }

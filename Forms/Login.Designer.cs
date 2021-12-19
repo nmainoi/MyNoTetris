@@ -39,11 +39,13 @@
             this.TXT_USUARIO.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(53)))), ((int)(((byte)(53)))));
             this.TXT_USUARIO.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.TXT_USUARIO.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold);
+            this.TXT_USUARIO.ForeColor = System.Drawing.Color.Gainsboro;
             this.TXT_USUARIO.Location = new System.Drawing.Point(103, 52);
             this.TXT_USUARIO.Multiline = true;
             this.TXT_USUARIO.Name = "TXT_USUARIO";
-            this.TXT_USUARIO.Size = new System.Drawing.Size(197, 43);
+            this.TXT_USUARIO.Size = new System.Drawing.Size(197, 35);
             this.TXT_USUARIO.TabIndex = 0;
+            this.TXT_USUARIO.Text = "Player01";
             this.TXT_USUARIO.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // BT_JOGAR
@@ -56,7 +58,7 @@
             this.BT_JOGAR.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BT_JOGAR.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Bold);
             this.BT_JOGAR.ForeColor = System.Drawing.Color.Gainsboro;
-            this.BT_JOGAR.Location = new System.Drawing.Point(103, 101);
+            this.BT_JOGAR.Location = new System.Drawing.Point(103, 94);
             this.BT_JOGAR.Name = "BT_JOGAR";
             this.BT_JOGAR.Size = new System.Drawing.Size(197, 43);
             this.BT_JOGAR.TabIndex = 5;

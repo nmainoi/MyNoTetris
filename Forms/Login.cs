@@ -29,8 +29,34 @@ namespace MyNoTetris.Forms
                 MessageBox.Show("Por gentileza defina um usuário!","Usuário em branco!");
                 return;
             }
-            Game._user = TXT_USUARIO.Text;
+            Classes.SQL._user = TXT_USUARIO.Text;
+            CreateUser();
             this.Close();
+        }
+
+        private void CreateUser()
+        {
+            int numberOftrys = 0;
+tryagain:
+            if (numberOftrys > 1)
+            {
+                MessageBox.Show("Algo deu errado com o banco de dados, contate um administrador!");
+                this.Close();
+                return;
+            }
+            string mysql = "Select ID FROM [BDTetris].[dbo].[USER](nolock) WHERE NAME= '" + TXT_USUARIO.Text + "'";
+            string UserHasName = Classes.SQL.ReadSQL(mysql);
+
+            if (string.IsNullOrEmpty(UserHasName))/* so insere novo usuario se nao le direto */
+            {
+                numberOftrys++;
+                mysql = "INSERT INTO [BDTetris].[dbo].[USER] (NAME) VALUES ( '" + TXT_USUARIO.Text + "')";
+                Classes.SQL.InsertSQL(mysql);
+                goto tryagain;
+            }
+            Classes.SQL._user = TXT_USUARIO.Text;
+            Classes.SQL._id = int.Parse( UserHasName);
+ 
         }
     }
 }
